@@ -8,7 +8,8 @@ class SearchBooks extends Component {
 
   state = {
     query: '',
-    books: []
+    books: [],
+    shelvedBooks: []
   };
 
   updateQuery = (query) => (
@@ -52,7 +53,7 @@ class SearchBooks extends Component {
           <ol className="books-grid">
             {this.state.books.map((book) => (
               <li >
-                <Book book={book}/>
+                <Book book={book} moveBook={this.props.moveBook}/>
               </li>
             ))}
           </ol>
