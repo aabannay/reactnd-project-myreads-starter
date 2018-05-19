@@ -16,9 +16,9 @@ class BookList extends Component {
         </div>
         <div className="list-books-content">
           <div>
-            <BookShelf title='Currently Reading' books={currentlyReadingBooks}/>
-            <BookShelf title='Want to Read' books={wantToReadBooks}/>
-            <BookShelf title='Read' books={readBooks}/>
+            <BookShelf title='Currently Reading' books={currentlyReadingBooks} moveBook={this.props.moveBook}/>
+            <BookShelf title='Want to Read' books={wantToReadBooks} moveBook={this.props.moveBook}/>
+            <BookShelf title='Read' books={readBooks} moveBook={this.props.moveBook}/>
           </div>
         </div>
       </div>

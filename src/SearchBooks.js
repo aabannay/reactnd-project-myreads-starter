@@ -13,10 +13,10 @@ class SearchBooks extends Component {
 
   updateQuery = (query) => (
     this.setState({query: query.trim()}),
-    this.getContacts(query)
+    this.getBooks(query)
   )
 
-  getContacts = (query) => (
+  getBooks = (query) => (
     search(query)
     .then( (response) => (
       this.setState({books: response})
