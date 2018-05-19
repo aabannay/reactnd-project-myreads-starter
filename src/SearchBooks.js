@@ -60,9 +60,6 @@ class SearchBooks extends Component {
   render() {
     this.setShelves()
     const {query, booksSearched, shelvedBooks} = this.state
-    // console.log({query})
-    console.log({booksSearched})
-    // console.log({shelvedBooks})
 
     return (
       <div className="search-books">
