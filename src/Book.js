@@ -2,12 +2,23 @@ import React, { Component } from 'react';
 
 class Book extends Component {
 
+  setThumbnail = () => {
+    let result = 'none'
+    if (this.props.book.imageLinks) {
+      if (this.props.book.imageLinks.thumbnail) {
+        result = `url("${this.props.book.imageLinks.thumbnail}")`
+      }
+    }
+    return result;
+  }
+
   render() {
     const styling = {
       width: 128,
       height: 193,
-      backgroundImage: `url("${this.props.book.imageLinks.thumbnail}")`
+      backgroundImage: this.setThumbnail()
     };
+
 
     const authors = this.props.book.authors || '';
 
