@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom'
 import { getAll } from './BooksAPI'
 import { search } from './BooksAPI'
 import Book from './Book'
+import App from './App'
 class SearchBooks extends Component {
 
 
   state = {
     query: '',
-    books: [],
+    booksSearched: [],
     shelvedBooks: []
   };
 
@@ -19,16 +20,50 @@ class SearchBooks extends Component {
 
   getBooks = (query) => (
     search(query)
-    .then( (response) => (
-      this.setState({books: response})
-    )).catch((err) => (
-      this.setState({books: []})
+    .then( (response) => {
+      if (response.error) { //when the returned object contains error! no books
+        this.setState({booksSearched: []})
+      } else {
+        this.setState({booksSearched: response})
+      }
+    }).catch((err) => (
+      this.setState({booksSearched: []})
     ))
   )
+
+  setShelves = () => {
+    const booksOnShelves = this.props.books;
+    const booksSearched = this.state.booksSearched;
+    let isBookShelved = false;
+
+    let currentShelf = ''
+    if (booksOnShelves.length > 0 && booksSearched.length > 0) {
+      for (let aBook of booksSearched) {
+        for (let shelvedBook of booksOnShelves) {
+          if (aBook.id === shelvedBook.id) {
+            isBookShelved = true;
+            currentShelf = shelvedBook.shelf;
+            break;
+          }
+        }
+        if(isBookShelved) {
+          aBook.shelf = currentShelf;
+          isBookShelved = false;
+        } else {
+          aBook.shelf = 'none';
+        }
+      }
+    }
+  }
+
+
   render() {
-    const {query, books, error} = this.state
-    console.log({query})
-    console.log({books})
+    this.setShelves()
+    const {query, booksSearched, shelvedBooks} = this.state
+    // console.log({query})
+    console.log({booksSearched})
+    // console.log({shelvedBooks})
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -51,8 +86,8 @@ class SearchBooks extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.books.map((book) => (
-              <li >
+            {this.state.booksSearched.map((book) => (
+              <li key={book.id}>
                 <Book book={book} moveBook={this.props.moveBook}/>
               </li>
             ))}
