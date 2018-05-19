@@ -1,22 +1,25 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-
+import { getAll }  from './BooksAPI'
 
 class SearchBooks extends Component {
 
 
   state = {
-    query: ''
+    query: '',
+    books: []
   }
 
   updateQuery = (query) => (
     this.setState({query: query.trim()})
-
   )
 
   render() {
     const {query} = this.state
     console.log({query})
+    let data = null
+    getAll().then( (response) => (console.log(response)))
+    console.log(data)
     return (
       <div className="search-books">
         <div className="search-books-bar">
